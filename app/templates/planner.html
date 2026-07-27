@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+Planner
+{% endblock %}
+
+{% block content %}
+
+<h1>
+    Planner
+</h1>
+
+<div class="planner-container">
+     
+    <section class="calendar-panel">
+       <div id="calendar"></div>
+    </section>
+
+    <section class="day-panel">
+        <h2 id="events-title">Today's Events</h2>
+        <p id="events-date">No date selected!</p>
+    
+    <div id="events-list">
+        <p>No events for today!</p>
+    </section>
+</div>
+
+<script src="/static/js/planner.js"></script>
+
+{% endblock %}
