@@ -1,0 +1,16 @@
+/* Zenith Planner CSS */
+.fc{color:#e5e7eb;background:transparent;font-family:inherit;}
+.fc-scrollgrid{border:1px solid rgba(82,82,91,.8)!important;border-radius:22px;overflow:hidden;background:rgba(17,24,39,.22);backdrop-filter:blur(8px);}
+.fc-theme-standard td,.fc-theme-standard th{border-color:rgba(113,113,122,.45)!important;}
+.fc-col-header-cell{background:rgba(24,24,27,.55)!important;}
+.fc-col-header-cell-cushion{color:#fff!important;font-weight:700;padding:12px 0;text-decoration:none!important;}
+.fc-daygrid-day{background:rgba(17,24,39,.18);}
+.fc-daygrid-day:hover{background:rgba(59,130,246,.12);}
+.fc-day-today{background:rgba(37,99,235,.18)!important;box-shadow:inset 0 0 0 2px rgba(96,165,250,.45);}
+.fc-daygrid-day-number{color:#f4f4f5!important;font-weight:600;}
+.fc-event{border:none!important;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.35);}
+.fc-toolbar-title{color:#fff;font-size:1.6rem!important;font-weight:700;}
+.fc-button{background:#27272a!important;border-radius:14px!important;text-transform:capitalize!important;color:#fff!important;}
+.fc-button:hover{background:#3f3f46!important;}
+.fc-toolbar-chunk,.fc-button-group{display:flex;gap:10px;}
+.planner-background{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25;filter:brightness(0.4)}
