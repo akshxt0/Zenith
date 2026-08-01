@@ -1,17 +1,40 @@
+:root {
+    --bg: #0f1115;
+    --surface: #1a1d24;
+    --surface-2: #242833;
+
+    --primary: #4f8cff;
+    --primary-hover: #3d74d8;
+
+    --text: #f5f5f5;
+    --muted: #9aa3b2;
+
+    --radius: 18px;
+}
+
+
+
+
+
+
+
+
+
+
 body{
     margin: 0;
     font-family: Arial, sans-serif;
 }
 
 header{
-    background: #222;
+    background: var(--surface-2);
     color: white;
     padding: 15px;
 }
 
 aside{
     width: 220px;
-    background: #f2f2f2;
+    background: var(--surface);
 }
 
 main{
@@ -29,9 +52,9 @@ main{
 
 .calendar-panel {
     flex: 2;
-    border: 1px solid #ccc;
+    border: 1px solid var(--muted);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--radius);
     min-height: 500px;
     width: 350px;
     flex-shrink: 0;
@@ -39,9 +62,9 @@ main{
 
 .day-panel {
     flex: 1;
-    border: 1px solid #ccc;
+    border: 1px solid var(--muted);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--radius);
     min-height: 500px;
     width: 250px;
 }
