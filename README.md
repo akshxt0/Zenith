@@ -70,29 +70,30 @@
 
 # 🚀 Installation
 
+Clone the repository:
+
 ```bash
 git clone https://github.com/akshxt0/Zenith.git
-
 cd Zenith
+```
 
-python -m venv .venv
+Run the setup script:
 
-source .venv/bin/activate
-# Windows
-# .venv\Scripts\activate
+```bash
+./setup.sh
+```
 
-pip install -r requirements.txt
+Start the development server:
 
+```bash
 uvicorn app.main:app --reload
 ```
 
-Open:
+Open your browser:
 
 ```
 http://127.0.0.1:8000
 ```
-
----
 
 # 📂 Project Structure
 
@@ -142,6 +143,6 @@ Feel free to fork the project and open a pull request.
 
 ### 🌌 *Reach Your Zenith.*
 
-Built with ❤️ by **Akshat Singh**
+Built with ❤️ by **Akshat :>**
 
 </div>
