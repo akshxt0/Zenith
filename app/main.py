@@ -210,3 +210,28 @@ def delete_event(
     db.commit()
 
     return {"success": True}
+
+# -------------------------------------------------
+# Update Event
+# -------------------------------------------------
+
+@app.patch("/api/events/{event_id}")
+def update_event(
+    event_id: int,
+    data: EventCreate,
+    db: Session = Depends(get_db),
+):
+
+    event = db.query(Event).filter(Event.id == event_id).first()
+
+    if not event:
+        return {"success": False}
+
+    event.title = data.title
+    event.category = data.category
+    event.date = datetime.strptime(data.date, "%Y-%m-%d").date()
+    event.time = datetime.strptime(data.time, "%H:%M").time()
+
+    db.commit()
+
+    return {"success": True}

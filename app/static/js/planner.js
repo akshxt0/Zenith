@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!calendarEl) return;
     let selectedEvent = null;
+    let editing = false;
+
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -47,22 +49,30 @@ document.addEventListener("DOMContentLoaded", function () {
         eventClick(info) {
 
     selectedEvent = info.event;
+    editing = true;
 
     openModal();
 
-    document
-        .getElementById("delete-event-btn")
-        .classList.remove("hidden");
+    document.getElementById("event-title").value = selectedEvent.title;
+    document.getElementById("event-date").value =
+        selectedEvent.startStr.slice(0, 10);
 
-},
+    document.getElementById("event-time").value =
+        selectedEvent.start
+            .toTimeString()
+            .slice(0, 5);
 
-        eventDrop(info) {
-            console.log("Moved:", info.event.title);
-        },
+    document.getElementById("event-category").value =
+        selectedEvent.extendedProps.category;
 
-        eventResize(info) {
-            console.log("Resized:", info.event.title);
-        }
+    document.getElementById("save-event-btn").textContent =
+        "Save Changes";
+
+    
+
+    deleteBtn.classList.remove("hidden");
+
+}
 
     });
 
@@ -84,6 +94,14 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(deleteBtn);
 
     function openModal() {
+
+    editing = true;
+
+    form.reset();
+
+    deleteBtn?.classList.add("hidden");
+
+    document.getElementById("save-event-btn").textContent = "Create Event";
 
         document
     .getElementById("delete-event-btn")
@@ -155,18 +173,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
         try {
 
-            const response = await fetch("/api/events", {
+            const url = editing
+    ? `/api/events/${selectedEvent.id}`
+    : "/api/events";
 
-                method: "POST",
+const method = editing
+    ? "PATCH"
+    : "POST";
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify(payload)
-
-            });
-
+const response = await fetch(url, {
+    method,
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+});
             if (!response.ok) {
 
                 throw new Error("Failed to save event.");
