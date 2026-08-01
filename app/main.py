@@ -186,3 +186,30 @@ def add_event(
         url="/planner",
         status_code=303,
     )
+
+from pydantic import BaseModel
+
+class EventCreate(BaseModel):
+    title: str
+    category: str
+    date: str
+    time: str
+
+
+@app.post("/api/events")
+def create_event(
+    data: EventCreate,
+    db: Session = Depends(get_db),
+):
+    event = Event(
+        title=data.title,
+        category=data.category,
+        date=datetime.strptime(data.date, "%Y-%m-%d").date(),
+        time=datetime.strptime(data.time, "%H:%M").time(),
+    )
+
+    db.add(event)
+    db.commit()
+    db.refresh(event)
+
+    return {"success": True, "id": event.id}

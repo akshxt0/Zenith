@@ -125,6 +125,125 @@
 
 </div>
 
+<!-- ================= New Event Modal ================= -->
+
+<div
+    id="event-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm"
+>
+
+    <div
+        class="w-full max-w-md rounded-3xl border border-zinc-700 bg-zinc-900/90 backdrop-blur-xl p-8 shadow-2xl"
+    >
+
+        <div class="flex items-center justify-between mb-6">
+
+            <h2 class="text-2xl font-bold text-white">
+                New Event
+            </h2>
+
+            <button
+                id="close-modal"
+                class="text-zinc-400 hover:text-white text-2xl"
+            >
+                ✕
+            </button>
+
+        </div>
+
+        <form id="event-form" class="space-y-5">
+
+            <div>
+
+                <label class="block text-sm text-zinc-400 mb-2">
+                    Title
+                </label>
+
+                <input
+                    id="event-title"
+                    type="text"
+                    class="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-3 text-white outline-none focus:border-blue-500"
+                    placeholder="Event title"
+                >
+
+            </div>
+
+            <div>
+
+    <label class="block text-sm text-zinc-400 mb-2">
+        Category
+    </label>
+
+    <select
+        id="event-category"
+        class="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-3 text-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+    >
+        <option value="study">📚 Study</option>
+        <option value="work">💼 Work</option>
+        <option value="health">💪 Health</option>
+        <option value="personal">🏡 Personal</option>
+        <option value="other">✨ Other</option>
+    </select>
+
+</div>
+
+            <div class="grid grid-cols-2 gap-4">
+
+                <div>
+
+                    <label class="block text-sm text-zinc-400 mb-2">
+                        Date
+                    </label>
+
+                    <input
+                        id="event-date"
+                        type="date"
+                        class="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-3 text-white"
+                    >
+
+                </div>
+
+                <div>
+
+                    <label class="block text-sm text-zinc-400 mb-2">
+                        Time
+                    </label>
+
+                    <input
+                        id="event-time"
+                        type="time"
+                        class="w-full rounded-xl bg-zinc-800 border border-zinc-700 px-4 py-3 text-white"
+                    >
+
+                </div>
+
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4">
+
+                <button
+                    type="button"
+                    id="cancel-modal"
+                    class="px-5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                    Create Event
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script src="/static/js/planner.js"></script>
 
 

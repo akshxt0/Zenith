@@ -38,3 +38,23 @@
         min-width: auto;
     }
 }
+
+/* ---------- Modal ---------- */
+
+#event-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999 !important;
+}
+
+#event-modal > div {
+    position: relative;
+    z-index: 10000;
+}
+
+.fc,
+.fc-header-toolbar,
+.fc-toolbar {
+    z-index: 1 !important;
+    position: relative;
+}

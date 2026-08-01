@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    /* =====================================
+       Calendar
+    ====================================== */
+
     const calendarEl = document.getElementById("calendar");
 
     if (!calendarEl) return;
@@ -28,80 +32,153 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         views: {
-            dayGridMonth: {
-                buttonText: "Month"
-            },
-            timeGridWeek: {
-                buttonText: "Week"
-            },
-            timeGridDay: {
-                buttonText: "Day"
-            }
+            dayGridMonth: { buttonText: "Month" },
+            timeGridWeek: { buttonText: "Week" },
+            timeGridDay: { buttonText: "Day" }
         },
 
-        // Load events from FastAPI
         events: "/api/events/feed",
 
-        // Clicking a date
         dateClick(info) {
-
             console.log("Clicked:", info.dateStr);
-
-            // We'll connect this to the Add Event modal later.
-
         },
 
-        // Clicking an event
         eventClick(info) {
-
             console.log("Event:", info.event.title);
-
-            // Later:
-            // Open event details modal
-
         },
 
-        // Drag & Drop
         eventDrop(info) {
-
             console.log("Moved:", info.event.title);
-
-            // Later:
-            // PATCH /api/events/{id}
-
         },
 
-        // Resize
         eventResize(info) {
-
             console.log("Resized:", info.event.title);
-
-            // Later:
-            // PATCH /api/events/{id}
-
         }
 
     });
 
     calendar.render();
 
-
     /* =====================================
-       Add Event Button
+       Modal
     ====================================== */
 
-    const addEventBtn = document.getElementById("add-event-btn");
+    const modal = document.getElementById("event-modal");
 
-    if (addEventBtn) {
+    const openBtn = document.getElementById("add-event-btn");
 
-        addEventBtn.addEventListener("click", function () {
+    const closeBtn = document.getElementById("close-modal");
 
-            console.log("Open Add Event Modal");
+    const cancelBtn = document.getElementById("cancel-modal");
 
-            // Modal will come next.
+    function openModal() {
 
-        });
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+
+        document.getElementById("event-title").focus();
 
     }
+
+    function closeModal() {
+
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+
+    }
+
+    openBtn?.addEventListener("click", openModal);
+
+    closeBtn?.addEventListener("click", closeModal);
+
+    cancelBtn?.addEventListener("click", closeModal);
+
+    modal?.addEventListener("click", function (e) {
+
+        if (e.target === modal) {
+
+            closeModal();
+
+        }
+
+    });
+
+    document.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape") {
+
+            closeModal();
+
+        }
+
+    });
+
+    /* =====================================
+       Save Event
+    ====================================== */
+
+    const form = document.getElementById("event-form");
+
+    form?.addEventListener("submit", async function (e) {
+
+        e.preventDefault();
+
+        const payload = {
+            title: document.getElementById("event-title").value.trim(),
+            category: document.getElementById("event-category").value,
+            date: document.getElementById("event-date").value,
+            time: document.getElementById("event-time").value
+        };
+
+        if (!payload.title) {
+
+            alert("Please enter a title.");
+
+            return;
+
+        }
+
+        try {
+
+            const response = await fetch("/api/events", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(payload)
+
+            });
+
+            if (!response.ok) {
+
+                throw new Error("Failed to save event.");
+
+            }
+
+            await response.json();
+
+            closeModal();
+
+            form.reset();
+
+            calendar.refetchEvents();
+
+            // Temporary until we make the agenda dynamic
+            window.location.reload();
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            alert("Couldn't save event.");
+
+        }
+
+    });
 
 });
