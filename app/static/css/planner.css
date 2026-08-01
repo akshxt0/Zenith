@@ -13,4 +13,28 @@
 .fc-button{background:#27272a!important;border-radius:14px!important;text-transform:capitalize!important;color:#fff!important;}
 .fc-button:hover{background:#3f3f46!important;}
 .fc-toolbar-chunk,.fc-button-group{display:flex;gap:10px;}
-.planner-background{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.25;filter:brightness(0.4)}
+.planner-background{position:absolute;inset:0;background-image: inherit;background-size:120%;background-position:center 15%;opacity:.5;filter:brightness(0.4)}
+.planner-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.planner-calendar {
+    min-width: 0;
+}
+
+.planner-agenda {
+    min-width: 280px;
+}
+
+@media (max-width: 1024px) {
+    .planner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .planner-agenda {
+        min-width: auto;
+    }
+}
