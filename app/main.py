@@ -163,29 +163,6 @@ def event_feed(
 # Add Event
 # -------------------------------------------------
 
-@app.post("/planner/add")
-def add_event(
-    title: str = Form(...),
-    category: str = Form(...),
-    date: str = Form(...),
-    time: str = Form(...),
-    db: Session = Depends(get_db),
-):
-
-    event = Event(
-        title=title,
-        category=category,
-        date=datetime.strptime(date, "%Y-%m-%d").date(),
-        time=datetime.strptime(time, "%H:%M").time(),
-    )
-
-    db.add(event)
-    db.commit()
-
-    return RedirectResponse(
-        url="/planner",
-        status_code=303,
-    )
 
 from pydantic import BaseModel
 
@@ -213,3 +190,23 @@ def create_event(
     db.refresh(event)
 
     return {"success": True, "id": event.id}
+
+# -------------------------------------------------
+# Delete Event
+# -------------------------------------------------
+
+@app.delete("/api/events/{event_id}")
+def delete_event(
+    event_id: int,
+    db: Session = Depends(get_db),
+):
+
+    event = db.query(Event).filter(Event.id == event_id).first()
+
+    if not event:
+        return {"success": False}
+
+    db.delete(event)
+    db.commit()
+
+    return {"success": True}

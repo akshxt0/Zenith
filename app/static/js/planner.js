@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const calendarEl = document.getElementById("calendar");
 
     if (!calendarEl) return;
+    let selectedEvent = null;
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
 
@@ -44,8 +45,16 @@ document.addEventListener("DOMContentLoaded", function () {
         },
 
         eventClick(info) {
-            console.log("Event:", info.event.title);
-        },
+
+    selectedEvent = info.event;
+
+    openModal();
+
+    document
+        .getElementById("delete-event-btn")
+        .classList.remove("hidden");
+
+},
 
         eventDrop(info) {
             console.log("Moved:", info.event.title);
@@ -71,8 +80,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const cancelBtn = document.getElementById("cancel-modal");
 
+    const deleteBtn = document.getElementById("delete-event-btn");
+    console.log(deleteBtn);
+
     function openModal() {
 
+        document
+    .getElementById("delete-event-btn")
+    .classList.add("hidden");
         modal.classList.remove("hidden");
         modal.classList.add("flex");
 
@@ -165,9 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             form.reset();
 
             calendar.refetchEvents();
-
-            // Temporary until we make the agenda dynamic
-            window.location.reload();
+            window.location.reload(); // Reload the page to reflect the new event
 
         }
 
@@ -181,4 +194,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+
+/* =====================================
+   Delete Event
+===================================== */
+
+deleteBtn?.addEventListener("click", async function () {
+
+    console.log("Delete button clicked");
+
+    if (!selectedEvent) return;
+
+    const confirmed = confirm(
+        `Delete "${selectedEvent.title}"?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+        const response = await fetch(
+            `/api/events/${selectedEvent.id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Delete failed.");
+        }
+
+        closeModal();
+
+        calendar.refetchEvents();
+
+        window.location.reload();
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        alert("Couldn't delete event.");
+
+    }
+
+});
 });
